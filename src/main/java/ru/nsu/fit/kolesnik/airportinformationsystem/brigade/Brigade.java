@@ -3,8 +3,11 @@ package ru.nsu.fit.kolesnik.airportinformationsystem.brigade;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.Hibernate;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
+
+import java.util.Objects;
 
 @Getter
 @Setter
@@ -27,5 +30,18 @@ public class Brigade {
     @ManyToOne
     @JoinColumn(name = "specialization_id", nullable = false)
     private Specialization specialization;
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        Brigade brigade = (Brigade) o;
+        return getId() != null && Objects.equals(getId(), brigade.getId());
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
+    }
 
 }

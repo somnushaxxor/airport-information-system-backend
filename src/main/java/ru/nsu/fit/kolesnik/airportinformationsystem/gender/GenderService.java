@@ -6,4 +6,6 @@ public interface GenderService {
 
     List<Gender> getAllGenders();
 
+    Gender getGenderById(Long id);
+
 }

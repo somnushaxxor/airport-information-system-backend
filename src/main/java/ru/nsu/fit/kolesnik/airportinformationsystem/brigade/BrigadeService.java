@@ -4,6 +4,8 @@ import java.util.List;
 
 public interface BrigadeService {
 
-    List<Brigade> getBrigadesBy(Long specialisationId, Long departmentId);
+    Brigade getBrigadeById(Long id);
+
+    List<Brigade> getBrigadesBySpecializationIdAndDepartmentIdIgnoringNull(Long specializationId, Long departmentId);
 
 }

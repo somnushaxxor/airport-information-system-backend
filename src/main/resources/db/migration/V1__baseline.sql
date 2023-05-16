@@ -1,28 +1,27 @@
 create table genders
 (
     id   bigint primary key generated always as identity,
-    name varchar(255) not null check ( name <> '' )
+    name varchar(255) unique not null check ( name <> '' )
 );
 
 create table specializations
 (
     id   bigint primary key generated always as identity,
-    name varchar(255) not null check ( name <> '' )
+    name varchar(255) unique not null check ( name <> '' )
 );
 
 create table departments
 (
-    id       bigint primary key generated always as identity,
-    name     varchar(255) not null check ( name <> '' ),
-    chief_id bigint       not null
+    id   bigint primary key generated always as identity,
+    name varchar(255) unique not null check ( name <> '' )
 );
 
 create table brigades
 (
     id                bigint primary key generated always as identity,
-    name              varchar(255) not null check ( name <> '' ),
-    department_id     bigint       not null references departments on delete cascade,
-    specialization_id bigint       not null references specializations on delete cascade
+    name              varchar(255) unique not null check ( name <> '' ),
+    department_id     bigint              not null references departments on delete cascade,
+    specialization_id bigint              not null references specializations on delete cascade
 );
 
 create table employees
@@ -40,6 +39,32 @@ create table employees
     brigade_id         bigint       references brigades on delete set null
 );
 
+create table departments_chiefs
+(
+    department_id bigint primary key references departments on delete cascade,
+    chief_id      bigint not null unique references employees on delete cascade
+);
+
+create table countries
+(
+    id   bigint primary key generated always as identity,
+    name varchar(255) unique not null check ( name <> '' )
+);
+
+create table cities
+(
+    id         bigint primary key generated always as identity,
+    name       varchar(255) unique not null check ( name <> '' ),
+    country_id bigint              not null references countries on delete cascade
+);
+
+create table airports
+(
+    id      bigint primary key generated always as identity,
+    name    varchar(255) unique not null check ( name <> '' ),
+    city_id bigint              not null references cities on delete cascade
+);
+
 create table airplane_models
 (
     id                  bigint primary key generated always as identity,
@@ -50,37 +75,14 @@ create table airplane_models
 create table airplanes
 (
     id                 bigint primary key generated always as identity,
-    airplane_model_id  bigint not null references airplane_models on delete cascade,
+    model_id           bigint not null references airplane_models on delete cascade,
     created_at         date   not null,
     joined_at          date   not null,
     pilots_brigade_id  bigint not null references brigades,
     tech_brigade_id    bigint not null references brigades,
     service_brigade_id bigint not null references brigades,
-    home_airport_id    bigint not null
+    home_airport_id    bigint not null references airports
 );
-
-create table countries
-(
-    id   bigint primary key generated always as identity,
-    name varchar(255) not null check ( name <> '' )
-);
-
-create table cities
-(
-    id         bigint primary key generated always as identity,
-    name       varchar(255) not null check ( name <> '' ),
-    country_id bigint       not null references countries on delete cascade
-);
-
-create table airports
-(
-    id      bigint primary key generated always as identity,
-    name    varchar(255) not null check ( name <> '' ),
-    city_id bigint       not null references cities on delete cascade
-);
-
-alter table airplanes
-    add foreign key (home_airport_id) references airports;
 
 create table routes
 (
@@ -94,7 +96,7 @@ create table routes
 create table flight_categories
 (
     id   bigint primary key generated always as identity,
-    name varchar(255) not null check ( name <> '' )
+    name varchar(255) unique not null check ( name <> '' )
 );
 
 create table flights

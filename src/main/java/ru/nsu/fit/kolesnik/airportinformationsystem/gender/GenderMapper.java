@@ -6,7 +6,7 @@ public final class GenderMapper {
     }
 
     public static GenderDto toDto(Gender gender) {
-        return new GenderDto(gender.getName());
+        return new GenderDto(gender.getId(), gender.getName());
     }
 
 }

@@ -20,7 +20,8 @@ public class BrigadeController {
             @RequestParam(value = "specializationId", required = false) Long specializationId,
             @RequestParam(value = "departmentId", required = false) Long departmentId
     ) {
-        return brigadeService.getBrigadesBy(specializationId, departmentId).stream().map(BrigadeMapper::toDto).toList();
+        return brigadeService.getBrigadesBySpecializationIdAndDepartmentIdIgnoringNull(specializationId, departmentId)
+                .stream().map(BrigadeMapper::toDto).toList();
     }
 
 }

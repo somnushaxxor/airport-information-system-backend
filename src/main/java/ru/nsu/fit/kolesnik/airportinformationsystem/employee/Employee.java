@@ -4,10 +4,10 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
-import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.Brigade;
-import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
+import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.Gender;
+import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -54,7 +54,7 @@ public class Employee {
     private Department department;
 
     @ManyToOne
-    @JoinColumn(name = "brigade_id", nullable = false)
+    @JoinColumn(name = "brigade_id")
     private Brigade brigade;
 
     @Override

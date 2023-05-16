@@ -1,4 +1,4 @@
-package ru.nsu.fit.kolesnik.airportinformationsystem;
+package ru.nsu.fit.kolesnik.airportinformationsystem.employee;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

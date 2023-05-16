@@ -1,5 +1,6 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.employee;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,9 +18,19 @@ public class EmployeeController {
         return employeeService.getAllEmployees().stream().map(EmployeeMapper::toDto).toList();
     }
 
+    @GetMapping("/{id}")
+    public EmployeeDto getEmployeeById(@PathVariable Long id) {
+        return EmployeeMapper.toDto(employeeService.getEmployeeById(id));
+    }
+
     @PostMapping
-    public void createEmployee(@RequestBody EmployeeCreationRequest creationRequest) {
+    public void createEmployee(@Valid @RequestBody EmployeeCreationRequest creationRequest) {
         employeeService.createEmployee(creationRequest);
+    }
+
+    @PutMapping
+    public void updateEmployee(@Valid @RequestBody EmployeeUpdateRequest updateRequest) {
+        employeeService.updateEmployee(updateRequest);
     }
 
     @DeleteMapping("/{id}")
