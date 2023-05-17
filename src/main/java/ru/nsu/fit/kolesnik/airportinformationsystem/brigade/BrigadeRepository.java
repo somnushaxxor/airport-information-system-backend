@@ -13,9 +13,9 @@ import java.util.List;
 public interface BrigadeRepository extends JpaRepository<Brigade, Long> {
 
     @Query("""
-            SELECT b
-            FROM Brigade b
-            WHERE (:department is null or b.department = :department)
+            select b
+            from Brigade b
+            where (:department is null or b.department = :department)
             and (:specialization is null or b.specialization = :specialization)
             """)
     List<Brigade> findAllByDepartmentAndSpecializationIgnoringNull(

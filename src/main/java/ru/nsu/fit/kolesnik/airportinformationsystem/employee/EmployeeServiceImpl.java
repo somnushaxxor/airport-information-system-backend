@@ -39,6 +39,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public List<Employee> getAllEmployeesFiltered(Long genderId, Long departmentId, Long brigadeId,
+                                                  Integer workExperienceInYears, Integer ageInYears,
+                                                  Integer numberOfChildren, Integer salary) {
+        return employeeRepository.findAllBy(genderId, departmentId, brigadeId, workExperienceInYears, ageInYears,
+                numberOfChildren, salary);
+    }
+
+    @Override
     public Employee getEmployeeById(Long id) {
         return employeeRepository.findById(id).orElseThrow(() -> new NotFoundException("Employee not found: " + id));
     }

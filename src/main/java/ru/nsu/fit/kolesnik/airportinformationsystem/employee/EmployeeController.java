@@ -1,6 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.employee;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,17 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeeDto> getAllEmployees() {
-        return employeeService.getAllEmployees().stream().map(EmployeeMapper::toDto).toList();
+    public List<EmployeePreviewDto> getAllEmployeesFiltered(
+            @RequestParam(value = "genderId", required = false) Long genderId,
+            @RequestParam(value = "departmentId", required = false) Long departmentId,
+            @RequestParam(value = "brigadeId", required = false) Long brigadeId,
+            @Min(0) @RequestParam(value = "workExperienceInYears", required = false) Integer workExperienceInYears,
+            @Min(0) @RequestParam(value = "ageInYears", required = false) Integer ageInYears,
+            @Min(0) @RequestParam(value = "numberOfChildren", required = false) Integer numberOfChildren,
+            @Min(0) @RequestParam(value = "salary", required = false) Integer salary
+    ) {
+        return employeeService.getAllEmployeesFiltered(genderId, departmentId, brigadeId, workExperienceInYears,
+                ageInYears, numberOfChildren, salary).stream().map(EmployeeMapper::toPreviewDto).toList();
     }
 
     @GetMapping("/{id}")

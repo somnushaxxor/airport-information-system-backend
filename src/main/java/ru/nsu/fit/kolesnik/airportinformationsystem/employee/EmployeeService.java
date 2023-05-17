@@ -6,6 +6,10 @@ public interface EmployeeService {
 
     List<Employee> getAllEmployees();
 
+    List<Employee> getAllEmployeesFiltered(Long genderId, Long departmentId, Long brigadeId,
+                                           Integer workExperienceInYears, Integer ageInYears,
+                                           Integer numberOfChildren, Integer salary);
+
     Employee getEmployeeById(Long id);
 
     void createEmployee(EmployeeCreationRequest creationRequest);
