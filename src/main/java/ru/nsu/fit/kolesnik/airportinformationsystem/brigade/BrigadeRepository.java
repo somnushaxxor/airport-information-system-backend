@@ -23,4 +23,6 @@ public interface BrigadeRepository extends JpaRepository<Brigade, Long> {
             @Param("specialization") Specialization specialization
     );
 
+    boolean existsByName(String name);
+
 }

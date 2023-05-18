@@ -1,5 +1,5 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.brigade;
 
-public record BrigadeDto(Long id, String name, String departmentName, String specializationName) {
+public record BrigadeDto(String name, Long departmentId, Long specializationId) {
 
 }
