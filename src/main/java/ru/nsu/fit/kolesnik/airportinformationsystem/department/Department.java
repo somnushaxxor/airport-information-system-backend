@@ -2,6 +2,7 @@ package ru.nsu.fit.kolesnik.airportinformationsystem.department;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.Hibernate;
 import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.Brigade;
 import ru.nsu.fit.kolesnik.airportinformationsystem.employee.Employee;
@@ -10,6 +11,7 @@ import java.util.Objects;
 import java.util.Set;
 
 @Getter
+@Setter
 @Entity
 @Table(name = "departments")
 public class Department {
@@ -19,7 +21,7 @@ public class Department {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @OneToOne
@@ -32,6 +34,9 @@ public class Department {
 
     @OneToMany(mappedBy = "department")
     private Set<Brigade> brigades;
+
+    @OneToMany(mappedBy = "department")
+    private Set<Employee> employees;
 
     @Override
     public boolean equals(Object o) {
