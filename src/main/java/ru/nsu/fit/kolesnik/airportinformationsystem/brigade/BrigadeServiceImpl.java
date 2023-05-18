@@ -25,8 +25,8 @@ public class BrigadeServiceImpl implements BrigadeService {
     }
 
     @Override
-    public List<Brigade> getBrigadesBySpecializationIdAndDepartmentIdIgnoringNull(Long specialisationId,
-                                                                                  Long departmentId) {
+    public List<Brigade> getAllBrigadesBy(Long specialisationId,
+                                          Long departmentId) {
         Specialization specialization = null;
         if (specialisationId != null) {
             specialization = specializationService.getSpecializationById(specialisationId);
@@ -35,7 +35,7 @@ public class BrigadeServiceImpl implements BrigadeService {
         if (departmentId != null) {
             department = departmentService.getDepartmentById(departmentId);
         }
-        return brigadeRepository.findAllByDepartmentAndSpecializationIgnoringNull(department, specialization);
+        return brigadeRepository.findAllIgnoringNullBy(department, specialization);
     }
 
 }

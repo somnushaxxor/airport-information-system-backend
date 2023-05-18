@@ -3,6 +3,8 @@ package ru.nsu.fit.kolesnik.airportinformationsystem.department;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
+import ru.nsu.fit.kolesnik.airportinformationsystem.employee.Employee;
+import ru.nsu.fit.kolesnik.airportinformationsystem.employee.EmployeeService;
 
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 public class DepartmentController {
 
     private final DepartmentService departmentService;
+    private final EmployeeService employeeService;
 
     @GetMapping
     public List<DepartmentPreviewDto> getAllDepartments() {
@@ -36,6 +39,19 @@ public class DepartmentController {
     @DeleteMapping("/{id}")
     public void deleteDepartmentById(@PathVariable Long id) {
         departmentService.deleteDepartmentById(id);
+    }
+
+    @PostMapping("/chief-appointment")
+    public void appointDepartmentChief(@Valid @RequestBody DepartmentChiefAppointmentRequest appointmentRequest) {
+        Department department = departmentService.getDepartmentById(appointmentRequest.departmentId());
+        Employee employee = employeeService.getEmployeeById(appointmentRequest.employeeId());
+        departmentService.appointDepartmentChief(department, employee);
+    }
+
+    @PostMapping("/{id}/chief-removal")
+    public void removeDepartmentChief(@PathVariable Long id) {
+        Department department = departmentService.getDepartmentById(id);
+        departmentService.removeDepartmentChief(department);
     }
 
 }

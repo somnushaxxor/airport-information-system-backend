@@ -15,7 +15,7 @@ public class EmployeeController {
     private final EmployeeService employeeService;
 
     @GetMapping
-    public List<EmployeePreviewDto> getAllEmployeesFiltered(
+    public List<EmployeePreviewDto> getAllEmployeesBy(
             @RequestParam(value = "genderId", required = false) Long genderId,
             @RequestParam(value = "departmentId", required = false) Long departmentId,
             @RequestParam(value = "brigadeId", required = false) Long brigadeId,
@@ -24,7 +24,7 @@ public class EmployeeController {
             @Min(0) @RequestParam(value = "numberOfChildren", required = false) Integer numberOfChildren,
             @Min(0) @RequestParam(value = "salary", required = false) Integer salary
     ) {
-        return employeeService.getAllEmployeesFiltered(genderId, departmentId, brigadeId, workExperienceInYears,
+        return employeeService.getAllEmployeesBy(genderId, departmentId, brigadeId, workExperienceInYears,
                 ageInYears, numberOfChildren, salary).stream().map(EmployeeMapper::toPreviewDto).toList();
     }
 

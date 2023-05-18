@@ -1,5 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.department;
 
+import ru.nsu.fit.kolesnik.airportinformationsystem.employee.Employee;
+
 import java.util.List;
 
 public interface DepartmentService {
@@ -13,5 +15,9 @@ public interface DepartmentService {
     void updateDepartment(DepartmentUpdateRequest updateRequest);
 
     void deleteDepartmentById(Long id);
+
+    void appointDepartmentChief(Department department, Employee employee);
+
+    void removeDepartmentChief(Department department);
 
 }

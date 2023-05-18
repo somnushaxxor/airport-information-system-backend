@@ -4,6 +4,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
+import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
 
 import java.util.List;
 
@@ -21,7 +23,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             and (:numberOfChildren is null or number_of_children = :numberOfChildren)
             and (:salary is null or salary = :salary)
             """, nativeQuery = true)
-    List<Employee> findAllBy(
+    List<Employee> findAllIgnoringNullBy(
             @Param("genderId") Long genderId,
             @Param("departmentId") Long departmentId,
             @Param("brigadeId") Long brigadeId,
@@ -30,5 +32,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
             @Param("numberOfChildren") Integer numberOfChildren,
             @Param("salary") Integer salary
     );
+
+    void deleteAllByDepartment(Department department);
+
+    void deleteAllBySpecialization(Specialization specialization);
 
 }

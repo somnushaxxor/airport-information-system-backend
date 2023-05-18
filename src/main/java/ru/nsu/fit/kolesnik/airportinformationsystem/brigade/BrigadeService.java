@@ -6,6 +6,6 @@ public interface BrigadeService {
 
     Brigade getBrigadeById(Long id);
 
-    List<Brigade> getBrigadesBySpecializationIdAndDepartmentIdIgnoringNull(Long specializationId, Long departmentId);
+    List<Brigade> getAllBrigadesBy(Long specializationId, Long departmentId);
 
 }

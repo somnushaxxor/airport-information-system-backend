@@ -18,7 +18,7 @@ public interface BrigadeRepository extends JpaRepository<Brigade, Long> {
             where (:department is null or b.department = :department)
             and (:specialization is null or b.specialization = :specialization)
             """)
-    List<Brigade> findAllByDepartmentAndSpecializationIgnoringNull(
+    List<Brigade> findAllIgnoringNullBy(
             @Param("department") Department department,
             @Param("specialization") Specialization specialization
     );

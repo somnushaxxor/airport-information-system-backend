@@ -16,12 +16,12 @@ public class BrigadeController {
     private final BrigadeService brigadeService;
 
     @GetMapping
-    public List<BrigadeDto> getBrigadesBy(
+    public List<BrigadeDto> getAllBrigadesBy(
             @RequestParam(value = "specializationId", required = false) Long specializationId,
             @RequestParam(value = "departmentId", required = false) Long departmentId
     ) {
-        return brigadeService.getBrigadesBySpecializationIdAndDepartmentIdIgnoringNull(specializationId, departmentId)
-                .stream().map(BrigadeMapper::toDto).toList();
+        return brigadeService.getAllBrigadesBy(specializationId, departmentId).stream()
+                .map(BrigadeMapper::toDto).toList();
     }
 
 }

@@ -21,7 +21,7 @@ public final class EmployeeMapper {
         if (employee.getBrigade() != null) {
             brigadeId = employee.getBrigade().getId();
         }
-        return new EmployeeDto(employee.getId(), employee.getFirstName(), employee.getLastName(),
+        return new EmployeeDto(employee.getFirstName(), employee.getLastName(),
                 employee.getGender().getId(), employee.getDateOfBirth(), employee.getJoinedAt(),
                 employee.getNumberOfChildren(), employee.getSalary(), employee.getSpecialization().getId(),
                 employee.getDepartment().getId(), brigadeId);

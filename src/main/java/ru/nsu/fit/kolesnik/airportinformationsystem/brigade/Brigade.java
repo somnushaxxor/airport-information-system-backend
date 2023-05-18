@@ -20,7 +20,7 @@ public class Brigade {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Column(name = "name", nullable = false)
+    @Column(name = "name", unique = true, nullable = false)
     private String name;
 
     @ManyToOne

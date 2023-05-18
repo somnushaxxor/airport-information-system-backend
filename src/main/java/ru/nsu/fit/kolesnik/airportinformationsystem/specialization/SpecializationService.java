@@ -8,4 +8,10 @@ public interface SpecializationService {
 
     Specialization getSpecializationById(Long id);
 
+    void createSpecialization(SpecializationCreationRequest creationRequest);
+
+    void updateSpecialization(SpecializationUpdateRequest updateRequest);
+
+    void deleteSpecializationById(Long id);
+
 }
