@@ -31,12 +31,12 @@ create table employees
     last_name          varchar(255) not null check ( last_name <> '' ),
     gender_id          bigint       not null references genders on delete cascade,
     date_of_birth      date         not null,
-    joined_at          date         not null,
+    joined_at          date         not null check ( date_of_birth <= joined_at ),
     number_of_children int          not null check ( number_of_children >= 0 ),
     salary             int          not null check ( salary >= 0 ),
     specialization_id  bigint       not null references specializations on delete cascade,
     department_id      bigint       not null references departments on delete cascade,
-    brigade_id         bigint       references brigades on delete set null
+    brigade_id         bigint references brigades on delete cascade
 );
 
 create table departments_chiefs
@@ -68,8 +68,8 @@ create table airports
 create table airplane_models
 (
     id                  bigint primary key generated always as identity,
-    name                varchar(255) not null check ( name <> '' ),
-    passengers_capacity int          not null check ( passengers_capacity >= 0 )
+    name                varchar(255) unique not null check ( name <> '' ),
+    passengers_capacity int                 not null check ( passengers_capacity >= 0 )
 );
 
 create table airplanes
@@ -77,11 +77,11 @@ create table airplanes
     id                 bigint primary key generated always as identity,
     model_id           bigint not null references airplane_models on delete cascade,
     created_at         date   not null,
-    joined_at          date   not null,
-    pilots_brigade_id  bigint not null references brigades,
-    tech_brigade_id    bigint not null references brigades,
-    service_brigade_id bigint not null references brigades,
-    home_airport_id    bigint not null references airports
+    joined_at          date   not null check ( created_at <= joined_at ),
+    pilots_brigade_id  bigint references brigades on delete set null,
+    tech_brigade_id    bigint references brigades on delete set null,
+    service_brigade_id bigint references brigades on delete set null,
+    home_airport_id    bigint not null references airports on delete cascade
 );
 
 create table routes
