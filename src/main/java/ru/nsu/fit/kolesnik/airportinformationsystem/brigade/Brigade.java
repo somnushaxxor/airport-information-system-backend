@@ -5,9 +5,11 @@ import lombok.Getter;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
+import ru.nsu.fit.kolesnik.airportinformationsystem.employee.Employee;
 import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
 
 import java.util.Objects;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -30,6 +32,9 @@ public class Brigade {
     @ManyToOne
     @JoinColumn(name = "specialization_id", nullable = false)
     private Specialization specialization;
+
+    @OneToMany(mappedBy = "brigade")
+    private Set<Employee> employees;
 
     @Override
     public boolean equals(Object o) {

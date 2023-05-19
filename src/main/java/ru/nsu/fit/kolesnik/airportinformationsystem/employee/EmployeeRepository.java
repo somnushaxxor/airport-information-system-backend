@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.Brigade;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
 
@@ -36,5 +37,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
     void deleteAllByDepartment(Department department);
 
     void deleteAllBySpecialization(Specialization specialization);
+
+    void deleteAllByBrigade(Brigade brigade);
 
 }
