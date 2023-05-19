@@ -40,4 +40,22 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long> {
 
     void deleteAllByBrigade(Brigade brigade);
 
+    List<Employee> findAllBySpecialization(Specialization specialization);
+
+    @Query(value = """
+            select distinct e.*
+            from pilots_medical_examinations
+            join employees e on e.id = pilots_medical_examinations.pilot_id
+            and (:medicalExaminationYear is null or date_part('year', date) = :medicalExaminationYear)
+            and (:genderId is null or gender_id = :genderId)
+            and (:ageInYears is null or date_part('year', age(current_date, date_of_birth)) = :ageInYears)
+            and (:salary is null or salary = :salary)
+            """, nativeQuery = true)
+    List<Employee> findAllPilots(
+            @Param("medicalExaminationYear") Integer medicalExaminationYear,
+            @Param("genderId") Long genderId,
+            @Param("ageInYears") Integer ageInYears,
+            @Param("salary") Integer salary
+    );
+
 }

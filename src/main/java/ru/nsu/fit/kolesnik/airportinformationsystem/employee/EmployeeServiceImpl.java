@@ -1,6 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.employee;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,6 +13,7 @@ import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.DepartmentService;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.Gender;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.GenderService;
+import ru.nsu.fit.kolesnik.airportinformationsystem.pilotmedicalexamination.PilotMedicalExaminationRepository;
 import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.Specialization;
 import ru.nsu.fit.kolesnik.airportinformationsystem.specialization.SpecializationService;
 
@@ -27,6 +29,9 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final SpecializationService specializationService;
     private final DepartmentService departmentService;
     private final BrigadeService brigadeService;
+    private final PilotMedicalExaminationRepository pilotMedicalExaminationRepository;
+    @Value("${specializations.core.pilot}")
+    private String pilotSpecializationName;
 
     @Override
     public List<Employee> getAllEmployeesBy(Long genderId, Long departmentId, Long brigadeId,
@@ -135,11 +140,29 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (isDepartmentChief(employee)) {
             departmentService.removeDepartmentChief(employee.getDepartment());
         }
+        if (isPilot(employee)) {
+            pilotMedicalExaminationRepository.deleteAllByPilot(employee);
+        }
         employeeRepository.delete(employee);
+    }
+
+    private boolean isPilot(Employee employee) {
+        return pilotSpecializationName.equals(employee.getSpecialization().getName());
+    }
+
+    @Override
+    public List<Employee> getAllPilots() {
+        Specialization pilotSpecialization = specializationService.getSpecializationByName(pilotSpecializationName);
+        return employeeRepository.findAllBySpecialization(pilotSpecialization);
     }
 
     private boolean isBrigadeOnlyEmployee(Employee employee) {
         return employee.getBrigade().getEmployees().size() == 1;
+    }
+
+    @Override
+    public List<Employee> getAllPilotsBy(Integer medicalExaminationYear, Long genderId, Integer ageInYears, Integer salary) {
+        return employeeRepository.findAllPilots(medicalExaminationYear, genderId, ageInYears, salary);
     }
 
 }

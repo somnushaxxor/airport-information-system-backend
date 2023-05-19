@@ -10,7 +10,7 @@ public final class EmployeeMapper {
         if (employee.getBrigade() != null) {
             brigadeName = employee.getBrigade().getName();
         }
-        return new EmployeePreviewDto(employee.getId(), employee.getFirstName() + " " + employee.getLastName(),
+        return new EmployeePreviewDto(employee.getId(), employee.getFirstName(), employee.getLastName(),
                 employee.getGender().getName(), employee.getDateOfBirth(), employee.getJoinedAt(),
                 employee.getNumberOfChildren(), employee.getSalary(), employee.getSpecialization().getName(),
                 employee.getDepartment().getName(), brigadeName);

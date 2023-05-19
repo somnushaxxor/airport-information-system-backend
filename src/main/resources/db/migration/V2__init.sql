@@ -34,6 +34,11 @@ values (1, 1),
        (2, 3),
        (3, 4);
 
+insert into pilots_medical_examinations(pilot_id, date)
+values (1, '2022-05-05'),
+       (1, '2023-03-04'),
+       (3, '2023-04-07');
+
 insert into countries(name)
 values ('Russia'),
        ('Germany'),

@@ -33,8 +33,8 @@ public class AirplaneServiceImpl implements AirplaneService {
     private String serviceSpecializationName;
 
     @Override
-    public List<Airplane> getAllAirplanesBy(Long homeAirportId, LocalDate joinedAt) {
-        return airplaneRepository.findAllIgnoringNullBy(homeAirportId, joinedAt);
+    public List<Airplane> getAllAirplanesBy(Long homeAirportId, LocalDate joinedAt, Integer flightsNumber) {
+        return airplaneRepository.findAllIgnoringNullBy(homeAirportId, joinedAt, flightsNumber);
     }
 
     @Override

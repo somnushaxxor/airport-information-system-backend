@@ -3,8 +3,10 @@ package ru.nsu.fit.kolesnik.airportinformationsystem.employee;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -46,6 +48,24 @@ public class EmployeeController {
     @DeleteMapping("/{id}")
     public void deleteEmployeeById(@PathVariable Long id) {
         employeeService.deleteEmployeeById(id);
+    }
+
+    @GetMapping("/pilots")
+    public List<EmployeePreviewDto> getAllPilots() {
+        return employeeService.getAllPilots().stream().map(EmployeeMapper::toPreviewDto).toList();
+    }
+
+    @GetMapping("/pilotsBy")
+    public List<EmployeePreviewDto> getAllPilotsBy(
+            @RequestParam(value = "medicalExaminationYear", required = false)
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
+            LocalDate medicalExaminationYear,
+            @RequestParam(value = "genderId", required = false) Long genderId,
+            @Min(0) @RequestParam(value = "ageInYears", required = false) Integer ageInYears,
+            @Min(0) @RequestParam(value = "salary", required = false) Integer salary
+    ) {
+        return employeeService.getAllPilotsBy(medicalExaminationYear.getYear(), genderId, ageInYears, salary).stream()
+                .map(EmployeeMapper::toPreviewDto).toList();
     }
 
 }

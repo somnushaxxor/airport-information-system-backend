@@ -1,6 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.airplane;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
@@ -20,9 +21,10 @@ public class AirplaneController {
             @RequestParam(value = "homeAirportId", required = false) Long homeAirportId,
             @RequestParam(value = "joinedAt", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-            LocalDate joinedAt
+            LocalDate joinedAt,
+            @Min(0) @RequestParam(value = "flightsNumber", required = false) Integer flightsNumber
     ) {
-        return airplaneService.getAllAirplanesBy(homeAirportId, joinedAt).stream()
+        return airplaneService.getAllAirplanesBy(homeAirportId, joinedAt, flightsNumber).stream()
                 .map(AirplaneMapper::toPreviewDto).toList();
     }
 

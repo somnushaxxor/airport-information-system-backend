@@ -17,10 +17,12 @@ public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
             from airplanes
             where (:homeAirportId is null or home_airport_id = :homeAirportId)
             and (cast(:joinedAt as date) is null or joined_at = :joinedAt)
+            and (:flightsNumber is null or :flightsNumber = :flightsNumber)
             """, nativeQuery = true)
     List<Airplane> findAllIgnoringNullBy(
             @Param("homeAirportId") Long homeAirportId,
-            @Param("joinedAt") LocalDate joinedAt
+            @Param("joinedAt") LocalDate joinedAt,
+            @Param("flightsNumber") Integer flightsNumber
     );
 
     boolean existsAirplaneByPilotsBrigade(Brigade pilotsBrigade);

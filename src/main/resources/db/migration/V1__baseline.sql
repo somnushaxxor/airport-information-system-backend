@@ -39,6 +39,14 @@ create table employees
     brigade_id         bigint references brigades on delete cascade
 );
 
+create table pilots_medical_examinations
+(
+    id       bigint primary key generated always as identity,
+    pilot_id bigint references employees on delete cascade,
+    date     date not null,
+    unique (pilot_id, date)
+);
+
 create table departments_chiefs
 (
     department_id bigint primary key references departments on delete cascade,
@@ -74,14 +82,22 @@ create table airplane_models
 
 create table airplanes
 (
-    id                 bigint primary key generated always as identity,
-    model_id           bigint not null references airplane_models on delete cascade,
-    created_at         date   not null,
-    joined_at          date   not null check ( created_at <= joined_at ),
-    pilots_brigade_id  bigint not null references brigades,
-    technicians_brigade_id    bigint not null references brigades,
-    service_brigade_id bigint not null references brigades,
-    home_airport_id    bigint not null references airports
+    id                     bigint primary key generated always as identity,
+    model_id               bigint not null references airplane_models on delete cascade,
+    created_at             date   not null,
+    joined_at              date   not null check ( created_at <= joined_at ),
+    pilots_brigade_id      bigint not null references brigades,
+    technicians_brigade_id bigint not null references brigades,
+    service_brigade_id     bigint not null references brigades,
+    home_airport_id        bigint not null references airports
+);
+
+create table airplane_maintenance_operations
+(
+    id              bigint primary key generated always as identity,
+    done_at         timestamp unique not null,
+    repair_required boolean          not null,
+    airplane_id     bigint           not null references airplanes on delete cascade
 );
 
 create table routes
@@ -107,10 +123,16 @@ create table flights
     category_id            bigint    not null references flight_categories on delete cascade,
     scheduled_departure_at timestamp not null,
     scheduled_arrival_at   timestamp not null,
-    actual_departure_at    timestamp,
-    actual_arrival_at      timestamp,
+    actual_departure_at    timestamp check ( scheduled_departure_at <= actual_departure_at ),
     ticket_price           integer   not null check ( ticket_price >= 0 ),
     min_tickets_number     integer   not null check ( min_tickets_number > 0)
+);
+
+create table flight_statuses
+(
+    id          bigint primary key generated always as identity,
+    name        varchar(255) not null check ( name <> '' ),
+    description text check ( description <> '' )
 );
 
 create table tickets
@@ -125,4 +147,10 @@ create table tickets
     international_passport_number varchar(255) check (international_passport_number <> ''),
     seat                          int          not null,
     baggage                       boolean      not null
+);
+
+create table ticket_statuses
+(
+    id   bigint primary key generated always as identity,
+    name varchar(255) not null check ( name <> '' )
 );

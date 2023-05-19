@@ -16,4 +16,8 @@ public interface EmployeeService {
 
     void deleteEmployeeById(Long id);
 
+    List<Employee> getAllPilots();
+
+    List<Employee> getAllPilotsBy(Integer medicalExaminationYear, Long genderId, Integer ageInYears, Integer salary);
+
 }
