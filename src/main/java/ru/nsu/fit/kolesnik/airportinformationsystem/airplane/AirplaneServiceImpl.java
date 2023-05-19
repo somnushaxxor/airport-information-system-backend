@@ -56,15 +56,27 @@ public class AirplaneServiceImpl implements AirplaneService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as pilots brigade is not specialized on pilots");
         }
+        if (pilotsBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as pilots brigade is empty");
+        }
         Brigade techniciansBrigade = brigadeService.getBrigadeById(creationRequest.techniciansBrigadeId());
         if (!techniciansBrigade.getSpecialization().getName().equals(technicianSpecializationName)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as technicians brigade is not specialized on technicians");
         }
+        if (techniciansBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as technicians brigade is empty");
+        }
         Brigade serviceBrigade = brigadeService.getBrigadeById(creationRequest.serviceBrigadeId());
         if (!serviceBrigade.getSpecialization().getName().equals(serviceSpecializationName)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as service brigade is not specialized on service");
+        }
+        if (serviceBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as service brigade is empty");
         }
         Airport homeAirport = airportService.getAirportById(creationRequest.homeAirportId());
         Airplane airplane = new Airplane();
@@ -95,15 +107,27 @@ public class AirplaneServiceImpl implements AirplaneService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as pilots brigade is not specialized on pilots");
         }
+        if (pilotsBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as pilots brigade is empty");
+        }
         Brigade techniciansBrigade = brigadeService.getBrigadeById(updateRequest.techniciansBrigadeId());
         if (!techniciansBrigade.getSpecialization().getName().equals(technicianSpecializationName)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as technicians brigade is not specialized on technicians");
         }
+        if (techniciansBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as technicians brigade is empty");
+        }
         Brigade serviceBrigade = brigadeService.getBrigadeById(updateRequest.serviceBrigadeId());
         if (!serviceBrigade.getSpecialization().getName().equals(serviceSpecializationName)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Brigade given as service brigade is not specialized on service");
+        }
+        if (serviceBrigade.getEmployees().isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Brigade given as service brigade is empty");
         }
         Airport homeAirport = airportService.getAirportById(updateRequest.homeAirportId());
         airplane.setModel(model);

@@ -16,4 +16,6 @@ public interface BrigadeService {
 
     List<Brigade> getAllNonemptyBrigadesBySpecializationName(String specializationName);
 
+    boolean isBrigadeAssignedToSomeAirplane(Brigade brigade);
+
 }

@@ -128,10 +128,18 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Transactional
     public void deleteEmployeeById(Long id) {
         Employee employee = getEmployeeById(id);
+        if (isBrigadeOnlyEmployee(employee) && brigadeService.isBrigadeAssignedToSomeAirplane(employee.getBrigade())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Unable to delete the only employee of the brigade which services some airplane");
+        }
         if (isDepartmentChief(employee)) {
             departmentService.removeDepartmentChief(employee.getDepartment());
         }
         employeeRepository.delete(employee);
+    }
+
+    private boolean isBrigadeOnlyEmployee(Employee employee) {
+        return employee.getBrigade().getEmployees().size() == 1;
     }
 
 }

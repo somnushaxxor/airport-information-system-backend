@@ -4,6 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.Brigade;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -21,5 +22,11 @@ public interface AirplaneRepository extends JpaRepository<Airplane, Long> {
             @Param("homeAirportId") Long homeAirportId,
             @Param("joinedAt") LocalDate joinedAt
     );
+
+    boolean existsAirplaneByPilotsBrigade(Brigade pilotsBrigade);
+
+    boolean existsAirplaneByTechniciansBrigade(Brigade technicianBrigade);
+
+    boolean existsAirplaneByServiceBrigade(Brigade serviceBrigade);
 
 }

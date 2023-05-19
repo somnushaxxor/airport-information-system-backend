@@ -1,6 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.specialization;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -16,6 +17,12 @@ public class SpecializationServiceImpl implements SpecializationService {
 
     private final SpecializationRepository specializationRepository;
     private final EmployeeRepository employeeRepository;
+    @Value("${specializations.core.pilot}")
+    private String pilotSpecializationName;
+    @Value("${specializations.core.technician}")
+    private String technicianSpecializationName;
+    @Value("${specializations.core.service}")
+    private String serviceSpecializationName;
 
     @Override
     public List<Specialization> getAllSpecializations() {
@@ -47,6 +54,10 @@ public class SpecializationServiceImpl implements SpecializationService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Specialization name must be unique: " + updateRequest.name());
         }
+        if (isCoreSpecialization(specialization) && !specialization.getName().equals(updateRequest.name())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Unable to rename core specialization: " + specialization.getName());
+        }
         specialization.setName(updateRequest.name());
         specializationRepository.save(specialization);
     }
@@ -55,8 +66,18 @@ public class SpecializationServiceImpl implements SpecializationService {
     @Transactional
     public void deleteSpecializationById(Long id) {
         Specialization specialization = getSpecializationById(id);
+        if (isCoreSpecialization(specialization)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Unable to delete core specialization: " + specialization.getName());
+        }
         employeeRepository.deleteAllBySpecialization(specialization);
         specializationRepository.delete(specialization);
+    }
+
+    private boolean isCoreSpecialization(Specialization specialization) {
+        return specialization.getName().equals(pilotSpecializationName)
+                || specialization.getName().equals(technicianSpecializationName)
+                || specialization.getName().equals(serviceSpecializationName);
     }
 
     @Override
