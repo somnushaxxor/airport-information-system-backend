@@ -14,4 +14,6 @@ public interface BrigadeService {
 
     void deleteBrigadeById(Long id);
 
+    List<Brigade> getAllNonemptyBrigadesBySpecializationName(String specializationName);
+
 }

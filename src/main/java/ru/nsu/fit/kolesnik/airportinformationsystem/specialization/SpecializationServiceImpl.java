@@ -59,4 +59,10 @@ public class SpecializationServiceImpl implements SpecializationService {
         specializationRepository.delete(specialization);
     }
 
+    @Override
+    public Specialization getSpecializationByName(String name) {
+        return specializationRepository.findByName(name)
+                .orElseThrow(() -> new NotFoundException("Specialization not found: " + name));
+    }
+
 }

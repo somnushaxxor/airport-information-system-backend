@@ -85,4 +85,11 @@ public class BrigadeServiceImpl implements BrigadeService {
         brigadeRepository.delete(brigade);
     }
 
+    @Override
+    public List<Brigade> getAllNonemptyBrigadesBySpecializationName(String specializationName) {
+        Specialization specialization = specializationService.getSpecializationByName(specializationName);
+        return brigadeRepository.findAllBySpecialization(specialization).stream()
+                .filter(brigade -> !brigade.getEmployees().isEmpty()).toList();
+    }
+
 }

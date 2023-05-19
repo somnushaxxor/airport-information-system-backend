@@ -2,6 +2,7 @@ package ru.nsu.fit.kolesnik.airportinformationsystem.brigade;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,6 +13,12 @@ import java.util.List;
 public class BrigadeController {
 
     private final BrigadeService brigadeService;
+    @Value("${specializations.core.pilot}")
+    private String pilotSpecializationName;
+    @Value("${specializations.core.technician}")
+    private String technicianSpecializationName;
+    @Value("${specializations.core.service}")
+    private String serviceSpecializationName;
 
     @GetMapping
     public List<BrigadePreviewDto> getAllBrigadesBy(
@@ -40,6 +47,24 @@ public class BrigadeController {
     @DeleteMapping("/{id}")
     public void deleteBrigadeById(@PathVariable Long id) {
         brigadeService.deleteBrigadeById(id);
+    }
+
+    @GetMapping("/pilots")
+    public List<BrigadePreviewDto> getAllNonemptyPilotsBrigades() {
+        return brigadeService.getAllNonemptyBrigadesBySpecializationName(pilotSpecializationName).stream()
+                .map(BrigadeMapper::toPreviewDto).toList();
+    }
+
+    @GetMapping("/technicians")
+    public List<BrigadePreviewDto> getAllNonemptyTechniciansBrigades() {
+        return brigadeService.getAllNonemptyBrigadesBySpecializationName(technicianSpecializationName).stream()
+                .map(BrigadeMapper::toPreviewDto).toList();
+    }
+
+    @GetMapping("/service")
+    public List<BrigadePreviewDto> getAllNonemptyServiceBrigades() {
+        return brigadeService.getAllNonemptyBrigadesBySpecializationName(serviceSpecializationName).stream()
+                .map(BrigadeMapper::toPreviewDto).toList();
     }
 
 }

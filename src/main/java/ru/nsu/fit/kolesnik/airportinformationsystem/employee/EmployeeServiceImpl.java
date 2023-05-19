@@ -47,7 +47,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         LocalDate joinedAt = LocalDate.now();
         if (isJoinedBeforeBorn(creationRequest.dateOfBirth(), joinedAt)) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Employee must be born before joined the airport");
+                    "Employee must be born before joining the airport");
         }
         Specialization specialization = specializationService.getSpecializationById(creationRequest.specializationId());
         Department department = departmentService.getDepartmentById(creationRequest.departmentId());
@@ -88,7 +88,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         Gender gender = genderService.getGenderById(updateRequest.genderId());
         if (isJoinedBeforeBorn(updateRequest.dateOfBirth(), updateRequest.joinedAt())) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
-                    "Employee must be born before joined the airport");
+                    "Employee can not be born after joining the airport");
         }
         Specialization specialization = specializationService.getSpecializationById(updateRequest.specializationId());
         Department department = departmentService.getDepartmentById(updateRequest.departmentId());

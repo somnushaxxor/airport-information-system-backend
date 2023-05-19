@@ -25,4 +25,6 @@ public interface BrigadeRepository extends JpaRepository<Brigade, Long> {
 
     boolean existsByName(String name);
 
+    List<Brigade> findAllBySpecialization(Specialization specialization);
+
 }

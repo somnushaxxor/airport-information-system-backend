@@ -78,10 +78,10 @@ create table airplanes
     model_id           bigint not null references airplane_models on delete cascade,
     created_at         date   not null,
     joined_at          date   not null check ( created_at <= joined_at ),
-    pilots_brigade_id  bigint references brigades on delete set null,
-    tech_brigade_id    bigint references brigades on delete set null,
-    service_brigade_id bigint references brigades on delete set null,
-    home_airport_id    bigint not null references airports on delete cascade
+    pilots_brigade_id  bigint not null references brigades,
+    technicians_brigade_id    bigint not null references brigades,
+    service_brigade_id bigint not null references brigades,
+    home_airport_id    bigint not null references airports
 );
 
 create table routes

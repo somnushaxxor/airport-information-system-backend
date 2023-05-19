@@ -17,7 +17,8 @@ values (1, 'PILOTS-1', 1),
        (1, 'TECH-1', 2),
        (2, 'PILOTS-2', 1),
        (3, 'TECH-3', 2),
-       (3, 'SERVICE-3', 3);
+       (3, 'SERVICE-3', 3),
+       (3, 'PILOTS-3', 1);
 
 insert into employees(first_name, last_name, gender_id, date_of_birth, joined_at, number_of_children,
                       salary, specialization_id, department_id, brigade_id)
@@ -62,7 +63,8 @@ values ('KUKURUZNIK', 10),
        ('AIRBUS', 100),
        ('BOEING', 200);
 
-insert into airplanes(model_id, created_at, joined_at, pilots_brigade_id, tech_brigade_id, service_brigade_id, home_airport_id)
+insert into airplanes(model_id, created_at, joined_at, pilots_brigade_id, technicians_brigade_id, service_brigade_id,
+                      home_airport_id)
 values (1, '2019-05-10', '2020-08-01', 1, 2, 5, 1);
 
 insert into flight_categories(name)

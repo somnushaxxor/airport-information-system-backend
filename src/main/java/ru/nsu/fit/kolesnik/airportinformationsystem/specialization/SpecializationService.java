@@ -14,4 +14,6 @@ public interface SpecializationService {
 
     void deleteSpecializationById(Long id);
 
+    Specialization getSpecializationByName(String name);
+
 }
