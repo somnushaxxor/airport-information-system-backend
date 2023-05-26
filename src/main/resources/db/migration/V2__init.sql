@@ -80,6 +80,12 @@ insert into airplanes(model_id, created_at, joined_at, pilots_brigade_id, techni
                       home_airport_id)
 values (1, '2019-05-10', '2020-08-01', 1, 2, 5, 1);
 
+insert into airplane_maintenance_operations(done_at, repair_required, airplane_id)
+values ('2019-02-24', false, 1),
+       ('2019-03-08', true, 1),
+       ('2019-05-10', true, 1),
+       ('2019-06-01', false, 1);
+
 insert into flight_categories(name)
 values ('DOMESTIC'),
        ('INTERNATIONAL');
