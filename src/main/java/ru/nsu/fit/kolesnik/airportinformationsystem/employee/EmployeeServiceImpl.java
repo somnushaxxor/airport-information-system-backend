@@ -11,6 +11,7 @@ import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.Brigade;
 import ru.nsu.fit.kolesnik.airportinformationsystem.brigade.BrigadeService;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.Department;
 import ru.nsu.fit.kolesnik.airportinformationsystem.department.DepartmentService;
+import ru.nsu.fit.kolesnik.airportinformationsystem.employee.attribute.value.AttributeValueRepository;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.Gender;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.GenderService;
 import ru.nsu.fit.kolesnik.airportinformationsystem.pilotmedicalexamination.PilotMedicalExaminationRepository;
@@ -30,6 +31,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private final DepartmentService departmentService;
     private final BrigadeService brigadeService;
     private final PilotMedicalExaminationRepository pilotMedicalExaminationRepository;
+    private final AttributeValueRepository attributeValueRepository;
     @Value("${specializations.core.pilot}")
     private String pilotSpecializationName;
 
@@ -143,6 +145,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         if (isPilot(employee)) {
             pilotMedicalExaminationRepository.deleteAllByPilot(employee);
         }
+        attributeValueRepository.deleteAllByEmployee(employee);
         employeeRepository.delete(employee);
     }
 

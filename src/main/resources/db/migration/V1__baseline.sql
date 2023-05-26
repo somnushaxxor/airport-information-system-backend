@@ -39,6 +39,23 @@ create table employees
     brigade_id         bigint references brigades on delete cascade
 );
 
+create table attributes
+(
+    id                bigint primary key generated always as identity,
+    name              varchar(255) not null check ( name <> '' ),
+    specialization_id bigint       not null references specializations on delete cascade,
+    unique (name, specialization_id)
+);
+
+create table attribute_values
+(
+    id           bigint primary key generated always as identity,
+    attribute_id bigint references attributes on delete cascade,
+    employee_id  bigint references employees on delete cascade,
+    value        varchar(255) not null check ( value <> '' ),
+    unique (attribute_id, employee_id)
+);
+
 create table pilots_medical_examinations
 (
     id       bigint primary key generated always as identity,
@@ -95,9 +112,9 @@ create table airplanes
 create table airplane_maintenance_operations
 (
     id              bigint primary key generated always as identity,
-    done_at         timestamp unique not null,
-    repair_required boolean          not null,
-    airplane_id     bigint           not null references airplanes on delete cascade
+    done_at         date unique not null,
+    repair_required boolean     not null,
+    airplane_id     bigint      not null references airplanes on delete cascade
 );
 
 create table routes

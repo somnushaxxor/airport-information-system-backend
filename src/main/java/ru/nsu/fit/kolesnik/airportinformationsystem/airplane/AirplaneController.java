@@ -22,9 +22,10 @@ public class AirplaneController {
             @RequestParam(value = "joinedAt", required = false)
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
             LocalDate joinedAt,
-            @Min(0) @RequestParam(value = "flightsNumber", required = false) Integer flightsNumber
+            @Min(0) @RequestParam(value = "flightsNumber", required = false) Integer flightsNumber,
+            @Min(0) @RequestParam(value = "ageInYears", required = false) Integer ageInYears
     ) {
-        return airplaneService.getAllAirplanesBy(homeAirportId, joinedAt, flightsNumber).stream()
+        return airplaneService.getAllAirplanesBy(homeAirportId, joinedAt, flightsNumber, ageInYears).stream()
                 .map(AirplaneMapper::toPreviewDto).toList();
     }
 

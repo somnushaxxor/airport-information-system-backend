@@ -29,6 +29,14 @@ values ('Robin', 'Karp', 1, '2002-09-27', '2020-09-01', 0, 100000, 1, 1, 1),
        ('Lora', 'Stone', 2, '2002-09-20', '2020-09-05', 2, 80000, 3, 3, 5),
        ('Alice', 'Krage', 2, '1999-10-10', '2020-09-05', 2, 90000, 3, 3, 5);
 
+insert into attributes(name, specialization_id)
+values ('Flight school GPA', 1),
+       ('Passed leadership courses', 2);
+
+insert into attribute_values(attribute_id, employee_id, value)
+values (1, 1, '4.5'),
+       (2, 2, 'True');
+
 insert into departments_chiefs(department_id, chief_id)
 values (1, 1),
        (2, 3),

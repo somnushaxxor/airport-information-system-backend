@@ -5,7 +5,7 @@ import java.util.List;
 
 public interface AirplaneService {
 
-    List<Airplane> getAllAirplanesBy(Long homeAirportId, LocalDate joinedAt, Integer flightsNumber);
+    List<Airplane> getAllAirplanesBy(Long homeAirportId, LocalDate joinedAt, Integer flightsNumber, Integer ageInYears);
 
     Airplane getAirplaneById(Long id);
 

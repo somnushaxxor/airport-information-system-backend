@@ -1,8 +1,10 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.flight.category;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.server.ResponseStatusException;
 import ru.nsu.fit.kolesnik.airportinformationsystem.NotFoundException;
 
@@ -13,6 +15,10 @@ import java.util.List;
 public class FlightCategoryServiceImpl implements FlightCategoryService {
 
     private final FlightCategoryRepository flightCategoryRepository;
+    @Value("${flight-categories.core.domestic}")
+    private String domesticFlightCategoryName;
+    @Value("${flight-categories.core.international}")
+    private String internationalFlightCategoryName;
 
     @Override
     public List<FlightCategory> getAllFlightCategories() {
@@ -44,14 +50,28 @@ public class FlightCategoryServiceImpl implements FlightCategoryService {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
                     "Flight category name must be unique: " + updateRequest.name());
         }
+        if (isCoreFlightCategory(flightCategory) && !flightCategory.getName().equals(updateRequest.name())) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Unable to rename core flight category: " + flightCategory.getName());
+        }
         flightCategory.setName(updateRequest.name());
         flightCategoryRepository.save(flightCategory);
     }
 
     @Override
+    @Transactional
     public void deleteFlightCategoryById(Long id) {
         FlightCategory flightCategory = getFlightCategoryById(id);
+        if (isCoreFlightCategory(flightCategory)) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST,
+                    "Unable to delete core flight category: " + flightCategory.getName());
+        }
         flightCategoryRepository.delete(flightCategory);
+    }
+
+    private boolean isCoreFlightCategory(FlightCategory flightCategory) {
+        return flightCategory.getName().equals(domesticFlightCategoryName)
+                || flightCategory.getName().equals(internationalFlightCategoryName);
     }
 
 }
