@@ -161,7 +161,7 @@ create table tickets
     gender_id                     bigint       not null references genders on delete cascade,
     date_of_birth                 date         not null,
     local_passport_number         varchar(255) not null check ( local_passport_number <> '' ),
-    international_passport_number varchar(255) check (international_passport_number <> ''),
+    international_passport_number varchar(255) check ( international_passport_number <> '' ),
     seat                          int          not null,
     baggage                       boolean      not null
 );

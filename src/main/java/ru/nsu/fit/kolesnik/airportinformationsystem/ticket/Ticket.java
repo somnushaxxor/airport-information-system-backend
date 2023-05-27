@@ -1,11 +1,17 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.ticket;
 
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
 import ru.nsu.fit.kolesnik.airportinformationsystem.flight.Flight;
 import ru.nsu.fit.kolesnik.airportinformationsystem.gender.Gender;
 
 import java.time.LocalDate;
 
+@Getter
+@Setter
+@EqualsAndHashCode
 @Entity
 @Table(name = "tickets")
 public class Ticket {
