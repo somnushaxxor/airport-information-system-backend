@@ -83,8 +83,8 @@ public class RouteServiceImpl implements RouteService {
 
     @Override
     public void deleteRouteById(Long id) {
-        //TODO
-        throw new UnsupportedOperationException();
+        Route route = getRouteById(id);
+        routeRepository.delete(route);
     }
 
 }

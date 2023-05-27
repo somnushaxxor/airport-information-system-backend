@@ -4,7 +4,8 @@ import java.util.List;
 
 public interface FlightService {
 
-    List<Flight> getAllFlightsBy();
+    List<Flight> getAllFlightsBy(Long airplaneId, Long airplaneModelId, Long routeId, Long categoryId,
+                                 Integer ticketPrice);
 
     Flight getFlightById(Long id);
 

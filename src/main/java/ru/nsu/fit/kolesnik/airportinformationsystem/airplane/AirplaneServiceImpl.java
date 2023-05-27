@@ -144,8 +144,8 @@ public class AirplaneServiceImpl implements AirplaneService {
     @Override
     @Transactional
     public void deleteAirplaneById(Long id) {
-        // TODO
-        throw new UnsupportedOperationException();
+        Airplane airplane = getAirplaneById(id);
+        airplaneRepository.delete(airplane);
     }
 
 }

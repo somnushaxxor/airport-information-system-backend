@@ -1,5 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.flight;
 
+import java.time.LocalDate;
+
 public final class FlightMapper {
 
     private FlightMapper() {
@@ -22,9 +24,13 @@ public final class FlightMapper {
     }
 
     public static FlightDto toDto(Flight flight) {
+        LocalDate actualDepartureAt = null;
+        if (flight.getActualDepartureAt() != null) {
+            actualDepartureAt = flight.getActualDepartureAt().toLocalDate();
+        }
         return new FlightDto(flight.getAirplane().getId(), flight.getRoute().getId(), flight.getCategory().getId(),
-                flight.getScheduledDepartureAt(), flight.getScheduledArrivalAt(), flight.getActualDepartureAt(),
-                flight.getTicketPrice(), flight.getMinTicketsNumber());
+                flight.getScheduledDepartureAt().toLocalDate(), flight.getScheduledArrivalAt().toLocalDate(),
+                actualDepartureAt, flight.getTicketPrice(), flight.getMinTicketsNumber());
     }
 
 }

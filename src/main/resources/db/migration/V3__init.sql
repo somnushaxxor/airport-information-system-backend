@@ -10,7 +10,8 @@ values ('PILOT'),
 insert into departments(name)
 values ('First Department'),
        ('Second Department'),
-       ('Third Department');
+       ('Third Department'),
+       ('Fourth Department');
 
 insert into brigades(department_id, name, specialization_id)
 values (1, 'PILOTS-1', 1),
@@ -50,7 +51,8 @@ values (1, '2022-05-05'),
 insert into countries(name)
 values ('Russia'),
        ('Germany'),
-       ('UK');
+       ('UK'),
+       ('USA');
 
 insert into cities(name, country_id)
 values ('Omsk', 1),
@@ -72,13 +74,15 @@ values (1, null, 2),
        (1, 2, 3);
 
 insert into airplane_models(name, passengers_capacity)
-values ('KUKURUZNIK', 10),
-       ('AIRBUS', 100),
-       ('BOEING', 200);
+values ('Kukuruznik', 10),
+       ('Airbus', 100),
+       ('Boeing', 200);
 
 insert into airplanes(model_id, created_at, joined_at, pilots_brigade_id, technicians_brigade_id, service_brigade_id,
                       home_airport_id)
-values (1, '2019-05-10', '2020-08-01', 1, 2, 5, 1);
+values (1, '2019-05-10', '2020-08-01', 1, 2, 5, 1),
+       (2, '2015-05-10', '2019-08-03', 3, 4, 5, 2),
+       (3, '2016-09-27', '2018-05-05', 6, 4, 5, 2);
 
 insert into airplane_maintenance_operations(done_at, repair_required, airplane_id)
 values ('2019-02-24', false, 1),
@@ -88,12 +92,13 @@ values ('2019-02-24', false, 1),
 
 insert into flight_categories(name)
 values ('DOMESTIC'),
-       ('INTERNATIONAL');
+       ('INTERNATIONAL'),
+       ('SPECIAL');
 
 insert into flights(airplane_id, route_id, category_id, scheduled_departure_at, scheduled_arrival_at, ticket_price,
                     min_tickets_number)
-values (1, 1, 1, '2023-01-01 9:25', '2023-01-01 12:34', 200, 50),
-       (1, 1, 1, '2023-01-02 9:25', '2023-01-02 12:34', 200, 50);
+values (1, 1, 1, '2023-01-01 9:25:00', '2023-01-01 12:34:00', 200, 50),
+       (1, 1, 1, '2023-01-02 9:25:00', '2023-01-02 12:34:00', 200, 50);
 
 insert into tickets(flight_id, first_name, last_name, gender_id, date_of_birth, local_passport_number,
                     international_passport_number, seat, baggage)

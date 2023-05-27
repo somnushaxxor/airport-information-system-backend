@@ -1,6 +1,7 @@
 package ru.nsu.fit.kolesnik.airportinformationsystem.flight;
 
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,8 +15,15 @@ public class FlightController {
     private final FlightService flightService;
 
     @GetMapping
-    public List<FlightPreviewDto> getAllFlightsBy() {
-        return flightService.getAllFlightsBy().stream().map(FlightMapper::toPreviewDto).toList();
+    public List<FlightPreviewDto> getAllFlightsBy(
+            @RequestParam(name = "airplaneId", required = false) Long airplaneId,
+            @RequestParam(name = "airplaneModelId", required = false) Long airplaneModelId,
+            @RequestParam(name = "routeId", required = false) Long routeId,
+            @RequestParam(name = "categoryId", required = false) Long categoryId,
+            @Min(0) @RequestParam(name = "ticketPrice", required = false) Integer ticketPrice
+    ) {
+        return flightService.getAllFlightsBy(airplaneId, airplaneModelId, routeId, categoryId, ticketPrice).stream()
+                .map(FlightMapper::toPreviewDto).toList();
     }
 
     @GetMapping("/{id}")
